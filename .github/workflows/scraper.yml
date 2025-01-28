@@ -2,8 +2,8 @@ name: Run Web Scraper
 
 on:
   schedule:
-    # Run every 5 minutes
-    - cron: "*/1 * * * *"
+    # Run every 10 minutes
+    - cron: "*/10 * * * *"
 
 jobs:
   scrape:
