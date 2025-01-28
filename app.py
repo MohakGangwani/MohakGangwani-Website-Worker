@@ -22,9 +22,7 @@ def scrape_webpage(url):
 
 if __name__ == "__main__":
 
-    while True:
-        # Replace with the URL you want to scrape
-        url = "https://mohakgangwani-website.onrender.com/"
-        print(f"Rendering the website at {datetime.fromtimestamp(time.time())}")
-        content = scrape_webpage(url)
-        time.sleep(300)
+    # Replace with the URL you want to scrape
+    url = "https://mohakgangwani-website.onrender.com/"
+    print(f"Rendering the website at {datetime.fromtimestamp(time.time())}")
+    content = scrape_webpage(url)
