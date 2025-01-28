@@ -3,7 +3,7 @@ name: Run Web Scraper
 on:
   schedule:
     # Run every 5 minutes
-    - cron: "*/30 * * * *"
+    - cron: "*/1 * * * *"
 
 jobs:
   scrape:
@@ -21,4 +21,4 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run script
-        run: python script_name.py
+        run: python app.py
