@@ -2,9 +2,9 @@ name: Run Web Scraper
 
 on:
   schedule:
-    # Run every 10 minutes between 8:30 AM and 9:30 PM UTC
-    - cron: "30-59/10 8 * * *"  # Runs at 8:30, 8:40, 8:50 AM
-    - cron: "*/10 9-21 * * *"   # Runs every 10 minutes from 9 AM to 9 PM
+    # Run every 10 minutes between 3:00 AM and 4:00 PM UTC (8:30 AM to 9:30 PM IST)
+    - cron: "0-59/10 3-15 * * *"  # 3 AM to 3:59 PM UTC
+    - cron: "0-40/10 16 * * *"     # 4:00 PM to 4:40 PM UTC
   workflow_dispatch: # Enable manual triggering
 
 jobs:
@@ -24,4 +24,3 @@ jobs:
 
       - name: Run script
         run: python app.py
-
