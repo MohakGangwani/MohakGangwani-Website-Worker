@@ -1,28 +1,44 @@
-from datetime import datetime
-import time
 import requests
+import time
 from bs4 import BeautifulSoup
 
-def scrape_webpage(url):
-    try:
-        # Send a GET request to the specified URL
-        response = requests.get(url)
-        response.raise_for_status()  # Check if the request was successful
+# Your Render URL
+url = "https://mohakgangwani.onrender.com"
 
-        # Parse the webpage content using BeautifulSoup
-        soup = BeautifulSoup(response.content, 'html.parser')
+# How long to wait between checks (seconds)
+check_interval = 5
 
-        # Extract the full HTML content
-        html_content = soup.prettify()
+# Maximum wait time (seconds) before giving up
+max_wait_time = 120
 
-        return html_content
+def wait_for_site(url):
+    print(f"Trying to wake up {url} ...")
+    start_time = time.time()
 
-    except requests.exceptions.RequestException as e:
-        return f"An error occurred: {e}"
+    while True:
+        try:
+            response = requests.get(url, timeout=10)
+            # If the site is actually up and returning OK HTML
+            if response.status_code == 200 and "Starting" not in response.text:
+                print("✅ Site is awake!")
+                return response.text
+            else:
+                print(f"⏳ Still waking up... (status {response.status_code})")
+        except requests.RequestException as e:
+            print(f"⚠️ Error: {e}")
+
+        elapsed = time.time() - start_time
+        if elapsed > max_wait_time:
+            raise TimeoutError("Site did not wake up in time.")
+
+        time.sleep(check_interval)
+
+def main():
+    html_content = wait_for_site(url)
+    soup = BeautifulSoup(html_content, "html.parser")
+
+    # Print or save all the page content
+    print(soup.prettify())
 
 if __name__ == "__main__":
-
-    # Replace with the URL you want to scrape
-    url = "https://mohakgangwani.onrender.com"
-    print(f"Rendering the website at {datetime.fromtimestamp(time.time())}")
-    content = scrape_webpage(url)
+    main()
